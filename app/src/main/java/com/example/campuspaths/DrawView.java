@@ -21,13 +21,14 @@ import hw8.Coordinate;
  * Custom DrawView that allows for painting on an ImageView.
  */
 public class DrawView extends AppCompatImageView {
-    public static final float SCALING = 0.23f;
+    public static final float SCALING = 0.25f;
 
-    static Paint paint = new Paint();
-    static int routeColor = Color.rgb(255, 255, 255);
-    static int srcColor = Color.rgb(85, 239, 196);
-    static int dstColor = Color.rgb(232, 67, 147);
-    static float radius = 10.0f;
+    private static Paint paint = new Paint();
+    private static int routeColor = Color.rgb(153, 128, 250);
+    private static int srcColor = Color.rgb(85, 239, 196);
+    private static int dstColor = Color.rgb(232, 67, 147);
+    private static float radius = 10.0f;
+    private static final int WIDTH = 3;
 
     // Coordinates in raw units.
     private Coordinate src = null;
@@ -112,6 +113,8 @@ public class DrawView extends AppCompatImageView {
                 "\n\tdst: '%s'\n",
                 Arrays.toString(pts), src, dst);
         assert(pts != null && pts.length % 2 == 0);
+        paint.setColor(routeColor);
+        paint.setStrokeWidth(WIDTH);
         canvas.drawLines(pts, paint);
     }
 
@@ -124,8 +127,6 @@ public class DrawView extends AppCompatImageView {
     public void setPts(ArrayList<Edge<Double, Coordinate>> path) {
         System.out.printf("DrawView: setPts: \n\tpath: '%s'\n", Arrays.toString(new ArrayList[]{path}));
         if (path != null) {
-            paint.setColor(routeColor);
-
             // Inv: For each path_i, pts contains [..., path_i_src_x, path_i_src_y, path_i_dst_x, path_i_dst_y].
             pts = new float[path.size() * 4];
             for (int i = 0; i < path.size(); i++) {

@@ -38,14 +38,17 @@ import hw8.model.Campus;
 public class MainActivity extends AppCompatActivity {
     private static float zoom = 2.5f;
 
+    // model.
     private Campus model;
 
-    DrawView mapDrawView;
-    Button findRouteBtn;
-    Button resetBtn;
-    ListView buildingsSrcListView;
-    ListView buildingsDstListView;
+    // view-controller;
+    private DrawView mapDrawView;
+    private Button findRouteBtn;
+    private Button resetBtn;
+    private ListView buildingsSrcListView;
+    private ListView buildingsDstListView;
 
+    // controller;
     private CampusBuilding source;
     private CampusBuilding destination;
     private boolean routeDrawn;
@@ -210,6 +213,20 @@ public class MainActivity extends AppCompatActivity {
                 // Zoom.
                 float midX = (float) (Math.abs(source.getLocation().getX() + destination.getLocation().getX()) / 2);
                 float midY = (float) (Math.abs(source.getLocation().getY() + destination.getLocation().getY()) / 2);
+
+                float distX = (float) Math.pow(source.getLocation().getX() * DrawView.SCALING
+                        - destination.getLocation().getX() * DrawView.SCALING
+                        , 2);
+                float distY = (float) Math.pow(source.getLocation().getY() * DrawView.SCALING
+                        - destination.getLocation().getY() * DrawView.SCALING
+                        , 2);
+//                float dist = (float) (Math.sqrt(distX + distY) + zoom) * DrawView.SCALING;
+//                float zoom_tmp = Math.min(Math.max(2.5f, dist), 3.5f);
+//                System.out.printf("\tMainActivity: findRoutBtnClick:" +
+//                        "\n\t\tdist: '%s'\n" +
+//                        "\n\t\tzoom_tmp: '%s'\n",
+//                        dist, zoom_tmp);
+
                 mapDrawView.setPivotX(midX * DrawView.SCALING);
                 mapDrawView.setPivotY(midY * DrawView.SCALING);
                 mapDrawView.setScaleX(zoom);
